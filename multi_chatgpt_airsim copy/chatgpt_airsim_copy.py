@@ -8,7 +8,7 @@ import time
 import numpy as np
 import openai
 import requests
-from airsim_wrapper import *
+from airsim_wrapper_copy import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompt", type=str, default="prompts/airsim_basic.txt")
