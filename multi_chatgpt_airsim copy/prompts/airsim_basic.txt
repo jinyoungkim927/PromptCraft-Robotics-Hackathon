@@ -40,3 +40,31 @@ None of the objects except for the drone itself are movable. Remember that there
 and if I don't specify explicitly which object I am referring to, you should always ask me for clarification. Never make assumptions.
 
 In terms of axis conventions, forward means positive X axis. Right means positive Y axis. Up means positive Z axis.
+
+This is another example of a full command of controlling a drone named "drone1"
+
+wrapper = MultiDroneAirSimWrapper(drone_names)
+
+# Takeoff
+wrapper.takeoff("drone1")
+
+# Land
+wrapper.land("drone1")
+
+# Get drone position
+position = wrapper.get_drone_position("drone1")
+
+# Fly to a point
+wrapper.fly_to(point, "drone1")
+
+# Fly a path
+wrapper.fly_path(points, "drone1")
+
+# Set yaw
+wrapper.set_yaw(yaw, "drone1")
+
+# Get yaw
+yaw = wrapper.get_yaw("drone1")
+
+# Get position of an object
+position = wrapper.get_position(object_name, "drone1")
