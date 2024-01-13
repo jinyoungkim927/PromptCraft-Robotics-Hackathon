@@ -95,12 +95,8 @@ class colors:  # You may need to change color settings
 
 print(f"Initializing AirSim...")
 drone_names = ["Drone1", "Drone2", "Drone3", "Drone4"]
-drones = {
-    "Drone1": AirSimWrapper("Drone1"),
-    "Drone2": AirSimWrapper("Drone2"),
-    "Drone3": AirSimWrapper("Drone3"),
-    "Drone4": AirSimWrapper("Drone4"),
-}
+drones = {name: AirSimWrapper(name) for name in drone_names}
+aw = MultiDroneAirSimWrapper(drone_names)
 aw = MultiDroneAirSimWrapper(drones)
 print(f"Done.")
 
