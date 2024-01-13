@@ -100,7 +100,8 @@ print(f"Done.")
 with open(args.prompt, "r") as f:
     prompt = f.read()
 
-ask(prompt)
+for drone_name in drone_names:
+    ask(prompt, drone_name)
 print(
     "Welcome to the AirSim chatbot! I am ready to help you with your AirSim questions and commands."
 )
