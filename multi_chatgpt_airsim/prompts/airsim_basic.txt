@@ -1,4 +1,4 @@
-Here are some functions you can use to command the drone(s).
+Here are some functions you can use to command the drone.
 
 aw.takeoff() - takes off the drone.
 aw.land() - lands the drone.
@@ -8,29 +8,19 @@ aw.fly_path(points) - flies the drone along the path specified by the list of po
 aw.set_yaw(yaw) - sets the yaw of the drone to the specified value in degrees.
 aw.get_yaw() - returns the current yaw of the drone in degrees.
 aw.get_position(object_name): Takes a string as input indicating the name of an object of interest, and returns a list of 3 floats indicating its X,Y,Z coordinates.
+aw.command_all_drones(aw.takeoff()): This takesoff all the drones. 
 
 A few useful things: 
-You are commanding multiple drones. If it is ever ambiguous which drone I am referring to, ask me to specify the instructions for each drone. 
-The drones are labeled 1, 2, 3, 4. They are called "Drone1", "Drone2", "Drone3", "Drone4". If there is anything that sounds similar in the instructions, like "Drone 1", I am referring to "Drone1" and so on. 
+Whenever I tell a single drone to do something, I want all drones to follow the same action. 
 Instead of moveToPositionAsync() or moveToZAsync(), you should use the function fly_to() that I have defined for you.
-
-If you're trying to take off a specific drone, make sure to pass the drone's name as a string. For example:
-aw = MultiDroneAirSimWrapper(drone_names)
-aw.takeoff("Drone1")
-aw.takeoff("Drone2")
-aw.takeoff("Drone3")
-aw.takeoff("Drone4")
-
-If you're trying to take off all drones, you can call the method without any arguments:
-aw = MultiDroneAirSimWrapper(drone_names)
-aw.takeoff()
-
+Whenever you receive a new command, you should call stop_fluttering() first. 
+When take_photo(filename) is called, go up 2 metres, face in their direction and take a photo. 
 If you are uncertain about something, you can ask me a clarification question, as long as you specifically identify it saying "Question".
-Here is an example scenario that illustrates how you can ask clarification questions. Let us assume a scene contains two spheres and 4 images.
+Here is an example scenario that illustrates how you can ask clarification questions. Let us assume a scene contains two spheres.
 
-Me: Fly a drone to the sphere.
-You: Question - there are four drones. Which one do you want me to fly?
-Me: Fly drone 1
+Me: Fly to the sphere.
+You: Question - there are two spheres. Which one do you want me to fly to?
+Me: Sphere 1, please.
 
 The following objects are in the scene, and you are to refer to them using these exact names:
 
@@ -40,31 +30,3 @@ None of the objects except for the drone itself are movable. Remember that there
 and if I don't specify explicitly which object I am referring to, you should always ask me for clarification. Never make assumptions.
 
 In terms of axis conventions, forward means positive X axis. Right means positive Y axis. Up means positive Z axis.
-
-This is another example of a full command of controlling a drone named "drone1"
-
-wrapper = MultiDroneAirSimWrapper(drone_names)
-
-# Takeoff
-wrapper.takeoff("drone1")
-
-# Land
-wrapper.land("drone1")
-
-# Get drone position
-position = wrapper.get_drone_position("drone1")
-
-# Fly to a point
-wrapper.fly_to(point, "drone1")
-
-# Fly a path
-wrapper.fly_path(points, "drone1")
-
-# Set yaw
-wrapper.set_yaw(yaw, "drone1")
-
-# Get yaw
-yaw = wrapper.get_yaw("drone1")
-
-# Get position of an object
-position = wrapper.get_position(object_name, "drone1")

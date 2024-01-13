@@ -8,7 +8,7 @@ import time
 import numpy as np
 import openai
 import requests
-from airsim_wrapper_copy import *
+from airsim_wrapper import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompt", type=str, default="prompts/airsim_basic.txt")
@@ -83,8 +83,20 @@ class colors:  # You may need to change color settings
     BLUE = "\033[34m"
 
 
-print(f"Initializing AirSim...")
+# Define the AirSimWrapper instance
 aw = AirSimWrapper()
+
+# Define the list of drones
+drones = ["Drone1", "Drone2", "Drone3", "Drone4"]
+
+
+# Define the function to command all drones
+def command_all_drones(command, *args, **kwargs):
+    for drone in drones:
+        aw.change_vehicle(drone)
+        command(*args, **kwargs)
+
+
 print(f"Done.")
 
 with open(args.prompt, "r") as f:
