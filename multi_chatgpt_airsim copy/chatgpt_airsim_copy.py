@@ -8,15 +8,7 @@ import time
 import numpy as np
 import openai
 import requests
-from chatgpt_airsim_copy import AirSimWrapper
-from multi_airsim_wrapper import *
-
-# drones = {
-#     "Drone1": MultiDroneAirSimWrapper("Drone1"),
-#     "Drone2": MultiDroneAirSimWrapper("Drone2"),
-#     "Drone3": MultiDroneAirSimWrapper("Drone2"),
-#     "Drone4": MultiDroneAirSimWrapper("Drone2"),
-# }
+from airsim_wrapper import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompt", type=str, default="prompts/airsim_basic.txt")
@@ -47,8 +39,6 @@ This code uses the `fly_to()` function to move the drone to a new position that 
 
 
 def ask(prompt):
-    # drone = drone_names[drone_name]  # Get the specific drone instance
-
     chat_history.append(
         {
             "role": "user",
@@ -94,14 +84,7 @@ class colors:  # You may need to change color settings
 
 
 print(f"Initializing AirSim...")
-drone_names = ["Drone1", "Drone2", "Drone3", "Drone4"]
-drones = {
-    "Drone1": AirSimWrapper("Drone1"),
-    "Drone2": AirSimWrapper("Drone2"),
-    "Drone3": AirSimWrapper("Drone3"),
-    "Drone4": AirSimWrapper("Drone4"),
-}
-aw = MultiDroneAirSimWrapper(drones)
+aw = AirSimWrapper()
 print(f"Done.")
 
 with open(args.prompt, "r") as f:
