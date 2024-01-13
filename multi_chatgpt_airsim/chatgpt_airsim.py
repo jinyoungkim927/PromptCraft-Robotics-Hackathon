@@ -87,15 +87,7 @@ class colors:  # You may need to change color settings
 aw = AirSimWrapper()
 
 # Define the list of drones
-drones = ["Drone1", "Drone2", "Drone3", "Drone4"]
-
-
-# Define the function to command all drones
-def command_all_drones(command, *args, **kwargs):
-    for drone in drones:
-        aw.change_vehicle(drone)
-        command(*args, **kwargs)
-
+drones = ["Drone1", "Drone2"]
 
 print(f"Done.")
 

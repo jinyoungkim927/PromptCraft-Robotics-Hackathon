@@ -78,10 +78,10 @@ class AirSimWrapper:
         yaw = airsim.to_eularian_angles(orientation_quat)[2]
         return yaw
 
-    def get_position(self, object_name, vehicle_name):
+    def get_position(self, object_name, vehicle_name=None):
         query_string = objects_dict[object_name] + ".*"
         object_names_ue = []
         while len(object_names_ue) == 0:
             object_names_ue = self.client.simListSceneObjects(query_string)
-        pose = self.client.simGetObjectPose(object_names_ue[0], vehicle_name=vehicle_name)
+        pose = self.client.simGetObjectPose(object_names_ue[0])
         return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
