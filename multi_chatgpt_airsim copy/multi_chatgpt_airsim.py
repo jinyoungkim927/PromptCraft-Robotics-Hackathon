@@ -10,12 +10,12 @@ import openai
 import requests
 from multi_airsim_wrapper import *
 
-drones = {
-    "Drone1": MultiDroneAirSimWrapper("Drone1"),
-    "Drone2": MultiDroneAirSimWrapper("Drone2"),
-    "Drone3": MultiDroneAirSimWrapper("Drone2"),
-    "Drone4": MultiDroneAirSimWrapper("Drone2"),
-}
+# drones = {
+#     "Drone1": MultiDroneAirSimWrapper("Drone1"),
+#     "Drone2": MultiDroneAirSimWrapper("Drone2"),
+#     "Drone3": MultiDroneAirSimWrapper("Drone2"),
+#     "Drone4": MultiDroneAirSimWrapper("Drone2"),
+# }
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompt", type=str, default="prompts/airsim_basic.txt")
@@ -46,7 +46,7 @@ This code uses the `fly_to()` function to move the drone to a new position that 
 
 
 def ask(prompt, drone_name):
-    drone = drones[drone_name]  # Get the specific drone instance
+    drone = drone_names[drone_name]  # Get the specific drone instance
 
     chat_history.append(
         {
