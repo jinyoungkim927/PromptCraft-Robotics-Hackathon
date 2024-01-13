@@ -17,6 +17,9 @@ Instead of moveToPositionAsync() or moveToZAsync(), you should use the function 
 If you're trying to take off a specific drone, make sure to pass the drone's name as a string. For example:
 aw = MultiDroneAirSimWrapper(drone_names)
 aw.takeoff("Drone1")
+aw.takeoff("Drone2")
+aw.takeoff("Drone3")
+aw.takeoff("Drone4")
 
 If you're trying to take off all drones, you can call the method without any arguments:
 aw = MultiDroneAirSimWrapper(drone_names)
