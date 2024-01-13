@@ -10,6 +10,7 @@ aw.fly_path(points, vehicle_name): Instructs the drone to follow a path defined 
 aw.set_yaw(yaw, vehicle_name): Sets the yaw of the specified drone to a given value in degrees.
 aw.get_yaw(vehicle_name): Returns the current yaw of the specified drone in degrees.
 aw.get_position(object_name, vehicle_name): Returns the XYZ coordinates of a specified object in the scene.
+aw.swarm_on_location(point): both drones find to the specfied position
 Additional Guidelines:
 
 Commanding Both Drones: Whenever you command one drone, ensure the same action is followed by the other drone. Use the vehicle_name parameter to control each drone individually.

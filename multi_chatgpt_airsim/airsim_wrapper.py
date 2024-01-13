@@ -85,3 +85,22 @@ class AirSimWrapper:
             object_names_ue = self.client.simListSceneObjects(query_string)
         pose = self.client.simGetObjectPose(object_names_ue[0])
         return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
+    
+    def swarm_on_location(self, point):
+        # Define a function for flying a single drone to the point
+        def fly_drone(vehicle_name):
+            if point[2] > 0:
+                self.client.moveToPositionAsync(point[0], point[1], -point[2], 5, vehicle_name=vehicle_name).join()
+            else:
+                self.client.moveToPositionAsync(point[0], point[1], point[2], 5, vehicle_name=vehicle_name).join()
+
+        # Create and start threads for each drone
+        drone1_thread = threading.Thread(target=fly_drone, args=("Drone1",))
+        drone2_thread = threading.Thread(target=fly_drone, args=("Drone2",))
+
+        drone1_thread.start()
+        drone2_thread.start()
+
+        # Wait for both threads to complete
+        drone1_thread.join()
+        drone2_thread.join()
