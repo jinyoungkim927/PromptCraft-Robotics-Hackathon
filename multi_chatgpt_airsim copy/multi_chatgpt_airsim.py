@@ -93,7 +93,7 @@ class colors:  # You may need to change color settings
 
 
 print(f"Initializing AirSim...")
-aw = AirSimWrapper()
+aw = MultiDroneAirSimWrapper()
 print(f"Done.")
 
 with open(args.prompt, "r") as f:

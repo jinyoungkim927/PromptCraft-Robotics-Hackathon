@@ -45,13 +45,12 @@ Reason - We first use the set_yaw command to set the yaw angle of the drone to 9
 <b>
 This solar panel array is 30 meters wide and 50 meters long. I want you to fly the drone in a lawnmower pattern above this array of solar panels to inspect them at an altitude of 5 meters. Here are the steps involved in properly executing a lawnmower pattern.
 
-1. Divide the length of the panel array into 10 rows. 
+1. Divide the length of the panel array into 10 rows.
 2. Fly to the rightmost end of the first row (along the width).
 3. Stay on the right side, but move down slightly to reach the end of the next row.
 4. Fly to the leftmost end of the second row.
 5. Stay on the left side, but move down slightly to reach the start of the next row.
 6. Repeat steps 2-5 until all rows are covered.
-
 
 Always maintain an altitude of exactly 5 meters.</b>
 
@@ -93,7 +92,6 @@ for row in range(1, 11):
 ```
 
 Reason - We first define the dimensions of the panel array and compute the distance between rows. Then, we fly to the rightmost end of the first row and start the lawnmower pattern. In each iteration of the loop, we move down slightly to reach the end of the current row, fly to the leftmost end of the next row, move down slightly to reach the start of the next row, and fly to the rightmost end of the next row. We maintain an altitude of 5 meters throughout the pattern.
-
 
 ---
 **Because you are covering 2 rows per iteration, you don't need 10 iterations here.**
@@ -190,7 +188,6 @@ Thank you for keeping an eye out for these inefficiencies!
 
 ---
 Yes, I apologize for the confusion earlier. You're correct that the X-coordinates in AirSim are defined differently than what you might expect. Here's the updated code that accounts for the difference:
-
 
 ```# Define the dimensions of the panel array
 panel_width = 30
