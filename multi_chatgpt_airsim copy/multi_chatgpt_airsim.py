@@ -45,8 +45,8 @@ This code uses the `fly_to()` function to move the drone to a new position that 
 ]
 
 
-def ask(prompt, drone_name):
-    drone = drone_names[drone_name]  # Get the specific drone instance
+def ask(prompt):
+    # drone = drone_names[drone_name]  # Get the specific drone instance
 
     chat_history.append(
         {
@@ -93,20 +93,15 @@ class colors:  # You may need to change color settings
 
 
 print(f"Initializing AirSim...")
-drone_names = {
-    "Drone1": MultiDroneAirSimWrapper("Drone1"),
-    "Drone2": MultiDroneAirSimWrapper("Drone2"),
-    "Drone3": MultiDroneAirSimWrapper("Drone3"),
-    "Drone4": MultiDroneAirSimWrapper("Drone4"),
-}
-aw = MultiDroneAirSimWrapper(drone_names)
+drone_names = ["Drone1", "Drone2", "Drone3", "Drone4"]
+drones = {name: MultiDroneAirSimWrapper(name) for name in drone_names}
+aw = MultiDroneAirSimWrapper(drones)
 print(f"Done.")
 
 with open(args.prompt, "r") as f:
     prompt = f.read()
 
-for drone_name in drone_names:
-    ask(prompt, drone_name)
+ask(prompt)
 print(
     "Welcome to the AirSim chatbot! I am ready to help you with your AirSim questions and commands."
 )

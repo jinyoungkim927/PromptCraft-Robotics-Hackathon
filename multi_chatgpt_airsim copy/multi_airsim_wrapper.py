@@ -26,65 +26,62 @@ objects_dict = {
 
 class MultiDroneAirSimWrapper:
     def __init__(self, drone_names):
-        self.clients = {}
-        for drone_name in drone_names:
-            client = airsim.MultirotorClient()
-            client.confirmConnection()
-            client.enableApiControl(True, drone_name)
-            client.armDisarm(True, drone_name)
-            self.clients[drone_name] = client
-        self.stop_thread = False
-        self.flutter_thread = None
+        self.drones = drone_names
 
-    def takeoff(self, drone_name):
-        self.clients[drone_name].takeoffAsync().join()
+    def takeoff(self, drone_name=None):
+        if drone_name:
+            self.drones[drone_name].takeoff()
+        else:
+            for drone in self.drones.values():
+                drone.takeoff()
 
-    def land(self, drone_name):
-        self.clients[drone_name].landAsync().join()
+    def land(self, drone_name=None):
+        if drone_name:
+            self.drones[drone_name].land()
+        else:
+            for drone in self.drones.values():
+                drone.land()
 
     def get_drone_position(self, drone_name):
-        pose = self.clients[drone_name].simGetVehiclePose()
-        return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
-
-    def fly_to(self, drone_name, point):
-        if point[2] > 0:
-            self.clients[drone_name].moveToPositionAsync(
-                point[0], point[1], -point[2], 5
-            ).join()
+        if drone_name:
+            return self.drones[drone_name].get_drone_position()
         else:
-            self.clients[drone_name].moveToPositionAsync(
-                point[0], point[1], point[2], 5
-            ).join()
+            return {
+                name: drone.get_drone_position() for name, drone in self.drones.items()
+            }
 
-    def fly_path(self, drone_name, points):
-        airsim_points = []
-        for point in points:
-            if point[2] > 0:
-                airsim_points.append(airsim.Vector3r(point[0], point[1], -point[2]))
-            else:
-                airsim_points.append(airsim.Vector3r(point[0], point[1], point[2]))
-        self.clients[drone_name].moveOnPathAsync(
-            airsim_points,
-            5,
-            120,
-            airsim.DrivetrainType.ForwardOnly,
-            airsim.YawMode(False, 0),
-            20,
-            1,
-        ).join()
+    def fly_to(self, point, drone_name=None):
+        if drone_name:
+            self.drones[drone_name].fly_to(point)
+        else:
+            for drone in self.drones.values():
+                drone.fly_to(point)
 
-    def set_yaw(self, drone_name, yaw):
-        self.clients[drone_name].rotateToYawAsync(yaw, 5).join()
+    def fly_path(self, points, drone_name=None):
+        if drone_name:
+            self.drones[drone_name].fly_path(points)
+        else:
+            for drone in self.drones.values():
+                drone.fly_path(points)
+
+    def set_yaw(self, yaw, drone_name=None):
+        if drone_name:
+            self.drones[drone_name].set_yaw(yaw)
+        else:
+            for drone in self.drones.values():
+                drone.set_yaw(yaw)
 
     def get_yaw(self, drone_name):
-        orientation_quat = self.clients[drone_name].simGetVehiclePose().orientation
-        yaw = airsim.to_eularian_angles(orientation_quat)[2]
-        return yaw
+        if drone_name:
+            return self.drones[drone_name].get_yaw()
+        else:
+            return {name: drone.get_yaw() for name, drone in self.drones.items()}
 
-    def get_position(self, drone_name, object_name):
-        query_string = objects_dict[object_name] + ".*"
-        object_names_ue = []
-        while len(object_names_ue) == 0:
-            object_names_ue = self.clients[drone_name].simListSceneObjects(query_string)
-        pose = self.clients[drone_name].simGetObjectPose(object_names_ue[0])
-        return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
+    def get_position(self, object_name, drone_name=None):
+        if drone_name:
+            return self.drones[drone_name].get_position(object_name)
+        else:
+            return {
+                name: drone.get_position(object_name)
+                for name, drone in self.drones.items()
+            }
