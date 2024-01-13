@@ -28,7 +28,7 @@ class MultiDroneAirSimWrapper:
     def __init__(self, drone_names):
         self.clients = {}
         for drone_name in drone_names:
-            client = airsim.MultiMultirotorClient()
+            client = airsim.MultirotorClient()
             client.confirmConnection()
             client.enableApiControl(True, drone_name)
             client.armDisarm(True, drone_name)
