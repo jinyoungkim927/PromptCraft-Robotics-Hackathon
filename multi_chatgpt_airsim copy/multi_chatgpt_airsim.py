@@ -10,6 +10,8 @@ import openai
 import requests
 from multi_airsim_wrapper import *
 
+from chatgpt_airsim.airsim_wrapper import AirSimWrapper
+
 # drones = {
 #     "Drone1": MultiDroneAirSimWrapper("Drone1"),
 #     "Drone2": MultiDroneAirSimWrapper("Drone2"),
@@ -94,7 +96,12 @@ class colors:  # You may need to change color settings
 
 print(f"Initializing AirSim...")
 drone_names = ["Drone1", "Drone2", "Drone3", "Drone4"]
-drones = {name: MultiDroneAirSimWrapper(name) for name in drone_names}
+drones = {
+    "Drone1": AirSimWrapper("Drone1"),
+    "Drone2": AirSimWrapper("Drone2"),
+    "Drone3": AirSimWrapper("Drone3"),
+    "Drone4": AirSimWrapper("Drone4"),
+}
 aw = MultiDroneAirSimWrapper(drones)
 print(f"Done.")
 
