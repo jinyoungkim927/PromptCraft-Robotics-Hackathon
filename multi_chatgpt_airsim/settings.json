@@ -14,18 +14,6 @@
             "X": 8,
             "Y": 0,
             "Z": -2
-        },
-        "Drone3": {
-            "VehicleType": "SimpleFlight",
-            "X": 12,
-            "Y": 0,
-            "Z": -2
-        },
-        "Drone4": {
-            "VehicleType": "SimpleFlight",
-            "X": 16,
-            "Y": 0,
-            "Z": -2
         }
     },
     "CameraDefaults": {

@@ -28,28 +28,31 @@ class AirSimWrapper:
     def __init__(self):
         self.client = airsim.MultirotorClient()
         self.client.confirmConnection()
-        self.client.enableApiControl(True)
-        self.client.armDisarm(True)
+        self.client.enableApiControl(True, "Drone1")
+        self.client.enableApiControl(True, "Drone2")
+        self.client.armDisarm(True, "Drone1")
+        self.client.armDisarm(True, "Drone2")
         self.stop_thread = False
         self.flutter_thread = None
+        print(self.client.listVehicles())
 
-    def takeoff(self):
-        self.client.takeoffAsync().join()
+    def takeoff(self, vehicle_name):
+        self.client.takeoffAsync(vehicle_name=vehicle_name).join()
 
-    def land(self):
-        self.client.landAsync().join()
+    def land(self, vehicle_name):
+        self.client.landAsync(vehicle_name=vehicle_name).join()
 
-    def get_drone_position(self):
-        pose = self.client.simGetVehiclePose()
+    def get_drone_position(self, vehicle_name):
+        pose = self.client.simGetVehiclePose(vehicle_name=vehicle_name)
         return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
 
-    def fly_to(self, point):
+    def fly_to(self, point, vehicle_name):
         if point[2] > 0:
-            self.client.moveToPositionAsync(point[0], point[1], -point[2], 5).join()
+            self.client.moveToPositionAsync(point[0], point[1], -point[2], 5, vehicle_name=vehicle_name).join()
         else:
-            self.client.moveToPositionAsync(point[0], point[1], point[2], 5).join()
+            self.client.moveToPositionAsync(point[0], point[1], point[2], 5, vehicle_name=vehicle_name).join()
 
-    def fly_path(self, points):
+    def fly_path(self, points, vehicle_name):
         airsim_points = []
         for point in points:
             if point[2] > 0:
@@ -64,27 +67,21 @@ class AirSimWrapper:
             airsim.YawMode(False, 0),
             20,
             1,
+            vehicle_name=vehicle_name
         ).join()
 
-    def set_yaw(self, yaw):
-        self.client.rotateToYawAsync(yaw, 5).join()
+    def set_yaw(self, yaw, vehicle_name):
+        self.client.rotateToYawAsync(yaw, 5, vehicle_name=vehicle_name).join()
 
-    def get_yaw(self):
-        orientation_quat = self.client.simGetVehiclePose().orientation
+    def get_yaw(self, vehicle_name):
+        orientation_quat = self.client.simGetVehiclePose(vehicle_name=vehicle_name).orientation
         yaw = airsim.to_eularian_angles(orientation_quat)[2]
         return yaw
 
-    def get_position(self, object_name):
+    def get_position(self, object_name, vehicle_name):
         query_string = objects_dict[object_name] + ".*"
         object_names_ue = []
         while len(object_names_ue) == 0:
             object_names_ue = self.client.simListSceneObjects(query_string)
-        pose = self.client.simGetObjectPose(object_names_ue[0])
+        pose = self.client.simGetObjectPose(object_names_ue[0], vehicle_name=vehicle_name)
         return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
-
-    # Add this method to the AirSimWrapper class in airsim_wrapper.py
-    def change_vehicle(self, vehicle_name):
-        self.client.reset()
-        self.client.confirmConnection()
-        self.client.enableApiControl(True, vehicle_name)
-        self.client.armDisarm(True, vehicle_name)
