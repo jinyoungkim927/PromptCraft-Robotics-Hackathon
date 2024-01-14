@@ -18,6 +18,7 @@ aw.query_language_model(prompt) - Query a language model with a specified prompt
 aw.count(self, object_name) - counts the number of instances of the specified object in the scene
 aw.search(self, object_name, radius) - search a certain radius around a specified object
 aw.get_latitude_longitude(self, object_name) - returns the latitude and longitude coordinates of the specific object
+aw.report_remarkable_features(x_distance, y_distance, step_size=10) - it scans over a certain area. 
 
 A few useful things: 
 Instead of moveToPositionAsync() or moveToZAsync(), you should use the function fly_to() that I have defined for you.

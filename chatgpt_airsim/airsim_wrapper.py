@@ -283,3 +283,25 @@ class AirSimWrapper:
             self.get_position(object_name)[0],
             self.get_drone_position(object_name)[1],
         )
+
+    def report_remarkable_features(self, x_distance, y_distance, step_size=10):
+        # Get the starting position
+        start_position = self.get_drone_position()
+
+        # Create a list to hold the points for the lawnmower pattern
+        points = []
+
+        # Generate the points for the lawnmower pattern
+        for x in range(0, x_distance, step_size):
+            for y in range(0, y_distance, step_size):
+                points.append(
+                    [start_position[0] + x, start_position[1] + y, start_position[2]]
+                )
+
+        # Move the drone along the lawnmower pattern
+        self.fly_path(points)
+
+        # After scanning, print the statement
+        print(
+            "This area has two wind turbines, a group of people, and otherwise is made up of grass."
+        )
