@@ -18,9 +18,10 @@ aw.query_language_model(prompt) - Query a language model with a specified prompt
 aw.count(self, object_name) - counts the number of instances of the specified object in the scene
 aw.search(self, object_name, radius) - search a certain radius around a specified object
 aw.get_latitude_longitude(self, object_name) - returns the latitude and longitude coordinates of the specific object
-aw.report_remarkable_features(x_distance, y_distance, step_size=10) - it scans over a certain area. 
+aw.report_remarkable_features(x_distance, y_distance, step_size=10) - it scans over a certain area to report remarkable features. 
 
 A few useful things: 
+When asked to report remarkable features, or to scan over an area, use report_remarkable_features. If no hyperparameters are given, default to (20, 20, 10)
 Instead of moveToPositionAsync() or moveToZAsync(), you should use the function fly_to() that I have defined for you.
 Whenever you receive a new command, you should call stop_fluttering() first. 
 When take_photo(filename) is called, go up 2 metres, face in their direction and take a photo. 
